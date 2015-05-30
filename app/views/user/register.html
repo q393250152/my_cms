@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="{{$assets}}/bootstrap/css/bootstrap.min.css">
+    <style>
+        .container {
+            width: 500px;
+            margin-top: 200px;
+
+        }
+        .btn{
+            margin-left: 320px;
+            margin-top: 30px;
+            background: #D597C8;
+            border: 1px solid #D597C8;
+        }
+        .btn:hover{
+            background: #9791D1;
+            border: 1px solid #9791D1;
+        }
+        body{
+            background:url("/app/assets/images/x2.jpg") no-repeat center right fixed;
+            background-size: cover;
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <ul style="list-style-type: none;">
+            <li style="font-size:30px;margin: 30px 0px 20px 135px; ">注册页面</li>
+            <li style="font-size: 16px;margin: 20px 0px 20px 110px;">如果已有帐号，请点击 <a href="index.php?control=user&action=login">登录</a> </li>
+        </ul>
+        <div class="alert alert-danger" role="alert" style="display: none;"></div>
+    </div>
+    <form class="form-horizontal" method="post" action="index.php?control=user&action=create">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">用户名:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail3" name="username" placeholder="用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">密&nbsp;&nbsp;&nbsp;码:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword3" name="password" placeholder="密码">
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+        <!--<div class="col-sm-offset-2 col-sm-10">-->
+        <!--<div class="checkbox">-->
+        <!--<label>-->
+        <!--<input type="checkbox"> Remember me-->
+        <!--</label>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">注 &nbsp;册</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<script rel="stylesheet" src="{{$assets}}/jquery/assets/js/jquery-2.1.4.min.js"></script>
+<script rel="stylesheet" src="{{$assets}}/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $(".btn").click(function(){
+            var info = "";
+            var num =0;
+            if($("#inputEmail3").val()==""){
+                info += "用户名不能为空！<br>";
+                num++;
+            }
+            if($("#inputPassword3").val()==""){
+                info += "密码不能为空!<br>";
+                num++;
+            }
+            if(num>0){
+                $(".alert").html(info).show();
+                return false;
+            }
+        })
+       $(".form-control").focus(function(){
+           $(".alert").hide();
+       })
+    })
+</script>
+</body>
+</html>

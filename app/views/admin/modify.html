@@ -1,0 +1,98 @@
+{{extends file = "app/views/layout/layout_admin.html"}}
+{{block name = "css"}}{{/block}}
+{{block name = "bread"}}
+<div id="breadcrumb"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><a
+        href="/Admin/Index/index" class="tip-bottom" data-original-title="前往主页" style="color: #333333;"><i
+        class="icon-home"></i> 主页&nbsp;&nbsp;&nbsp;</a>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span>&nbsp;&nbsp;&nbsp;系统设置&nbsp;&nbsp;&nbsp;</span>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span><b>&nbsp;&nbsp;&nbsp;密码修改&nbsp;&nbsp;&nbsp;</b></span>
+</div>
+<h1>用户管理</h1>
+{{/block}}
+{{block name = "content"}}
+<div class="quick-actions_homepage">
+
+
+    <div class="widget-title">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="glyphicon-class">密码修改</span>
+    </div>
+    <div class="for">
+        <div class="alert alert-danger" role="alert" style="width: 385px;margin-left: 150px;display: none;">
+
+        </div>
+        <form class="form-horizontal for1" method="post" action="index.php?control=admin&action=create">
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control sub0" name="name" id="inputPassword3"
+                           value="{{$admin.username}}">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">原始密码</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control sub1" id="inputPassword3" name="submit1" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">新密码</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control sub2" id="inputPassword3" name="submit2" value="">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">确认密码</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control sub3" id="inputPassword3" name="submit3" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+{{/block}}
+{{block name = "js"}}
+<script>
+    $(function () {
+        $(".navbar-nav li").hover(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+        })
+        $(".btn").click(function () {
+            var info = "";
+            var num = 0;
+            if ($(".sub0").val() == "" || $(".sub1").val() == "" || $(".sub2").val() == "" || $(".sub3").val() == "") {
+                info += "用户名和密码不能为空！<br>";
+                num++;
+            }
+            if ($(".sub2").val() != $(".sub3").val()) {
+                info += "新密码两次输入不一致，请重新输入!<br>";
+                num++;
+            }
+            if (num > 0) {
+                $(".alert").html(info).show();
+                return false;
+            }
+        })
+        $(".form-control").focus(function () {
+            $(".alert").hide();
+        })
+    })
+
+</script>
+{{/block}}

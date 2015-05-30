@@ -1,0 +1,92 @@
+{{extends file = "app/views/layout/layout_admin.html"}}
+{{block name = "css"}}
+<style>
+
+    .input-group {
+        width: 100%;
+    }
+
+    .td1 {
+        text-align: right;
+        margin-left: -50px;
+        display: block;
+        height: 43px;
+    }
+
+    .hide {
+        display: none;
+
+    }
+
+    .second {
+        display: none;
+    }
+
+
+</style>
+{{/block}}
+{{block name = "bread"}}
+<div id="breadcrumb"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><a
+        href="/Admin/Index/index" class="tip-bottom" data-original-title="前往主页" style="color: #333333;"><i
+        class="icon-home"></i> 主页&nbsp;&nbsp;&nbsp;
+</a>
+
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span><b>&nbsp;&nbsp;&nbsp;清除缓存&nbsp;&nbsp;&nbsp;</b></span>
+</div>
+<h1>清除缓存</h1>
+{{/block}}
+
+{{block name ="content"}}
+<div class="quick-actions_homepage">
+    <div class="input-group">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></span>
+
+        <div class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status"
+             style="background: #EEEEEE;">清除缓存
+        </div>
+    </div>
+    <div style="margin-left: 50px;">
+        <a href="index.php?control=user&action=clear_cache"><span class="label label-danger" style="width: 300px;">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            <span class="glyphicon-class">点击清除缓存</span>
+        </span></a>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+{{/block}}
+
+{{block name ="js"}}
+
+<script>
+    $(function () {
+        $(".navbar-nav li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+        })
+        $(".next").click(function () {
+            if ($(this).text() == "提交") {
+                $(".from1").submit();
+            }
+            $(".next").text("提交");
+            $(".prev").prop("disabled", false);
+            $(".fist").hide();
+            $(".second").fadeIn(300);
+
+            return false;
+        })
+        $(".prev").click(function () {
+            $(".next").text("前进");
+            $(".second").hide();
+            $(".fist").fadeIn(300);
+            $(".prev").prop("disabled", true);
+            return false;
+        })
+
+    })
+</script>
+{{/block}}

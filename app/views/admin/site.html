@@ -1,0 +1,178 @@
+{{extends file = "app/views/layout/layout_admin.html"}}
+{{block name = "css"}}
+
+<style>
+
+    .input-group {
+        width: 100%;
+    }
+
+    .td1 {
+        text-align: right;
+        margin-left: -50px;
+        display: block;
+        height: 43px;
+    }
+
+    .hide {
+        display: none;
+
+    }
+
+    .second {
+        display: none;
+    }
+
+
+</style>
+{{/block}}
+{{block name = "bread"}}
+
+<div id="breadcrumb"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><a
+        href="/Admin/Index/index" class="tip-bottom" data-original-title="前往主页" style="color: #333333;"><i
+        class="icon-home"></i> 主页&nbsp;&nbsp;&nbsp;
+</a>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span>&nbsp;&nbsp;&nbsp;系统设置&nbsp;&nbsp;&nbsp;</span>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span><b>&nbsp;&nbsp;&nbsp;站点信息&nbsp;&nbsp;&nbsp;</b></span>
+</div>
+<h1>用户管理</h1>
+
+{{/block}}
+{{block name = "content"}}
+<div class="quick-actions_homepage">
+    <div class="input-group">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></span>
+
+        <div class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status"
+             style="background: #EEEEEE;">站点信息
+        </div>
+    </div>
+    <div class="input-group">
+        <form class="form-horizontal from1" method="post" action="index.php?control=admin&action=do_site">
+            <div class="fist">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">名 字：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="name" value="{{$site.name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">姓 氏：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="surname" value="{{$site.surname}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">网站名称：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="web_name" value="{{$site.web_name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">ICP备案号：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="ICP" value="{{$site.ICP}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">版权信息：</label>
+
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="Copyright">{{$site.Copyright}}</textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="second">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">E-mail</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="email" value="{{$site.email}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">QQ</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="QQ" value="{{$site.QQ}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">联系电话：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="tel" value="{{$site.tel}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">传 真：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="fax" value="{{$site.fax}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">新浪微博：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputEmail3" name="weibo" value="{{$site.weibo}}">
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="1" name="cms" checked>长乐未央CMS使用协议
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default prev" disabled>后退</button>
+                    <button type="submit" class="btn btn-default next">前进</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+
+{{/block}}
+
+{{block name = "js"}}
+
+<script>
+    $(function () {
+        $(".navbar-nav li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+        })
+        $(".next").click(function () {
+            if ($(this).text() == "提交") {
+                $(".from1").submit();
+            }
+            $(".next").text("提交");
+            $(".prev").prop("disabled", false);
+            $(".fist").hide();
+            $(".second").fadeIn(300);
+
+            return false;
+        })
+        $(".prev").click(function () {
+            $(".next").text("前进");
+            $(".second").hide();
+            $(".fist").fadeIn(300);
+            $(".prev").prop("disabled", true);
+            return false;
+        })
+
+    })
+</script>
+{{/block}}

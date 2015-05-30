@@ -1,0 +1,273 @@
+{{extends file="app/views/layout/layout_admin.html"}}
+
+{{block name="css"}}
+<style>
+
+    .input-group {
+        width: 98.6%;
+    }
+
+    .td1 {
+        text-align: right;
+        margin-left: -50px;
+        display: block;
+        height: 43px;
+    }
+
+    .label {
+        width: 80px;
+        height: 35px;
+        padding: 10px;
+        margin-left: 20px;
+    }
+
+    .tab {
+        width: 100%;
+        margin-left: 20px;
+        margin-top: 0px;
+        text-align: center;
+    }
+
+    .tab th {
+        text-align: center;
+    }
+
+    .th1 {
+        width: 45px;
+
+    }
+
+    .th2 {
+        width: 65px;
+    }
+
+    .right {
+        width: 30px;
+        height: 30px;
+    }
+
+    .right1 {
+        width: 12px;
+        height: 12px;
+        display: block;
+        border: none;
+    }
+    .right1:hover{
+        border: none;
+        background: none;
+        text-decoration: none;
+    }
+
+    .right2 {
+        width: 12px;
+        height: 12px;
+        margin-top: 3px;
+    }
+
+    .right:hover {
+        border: none;
+        background: none;
+    }
+    #edit3:hover{
+        background: none;
+        text-decoration: none;
+        border: none;
+    }
+    #edit5:hover{
+        background: none;
+        text-decoration: none;
+        border: none;
+    }
+
+
+</style>
+{{/block}}
+{{block name="bread"}}
+<div id="breadcrumb"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><a
+        href="/Admin/Index/index" class="tip-bottom" data-original-title="前往主页" style="color: #333333;"><i
+        class="icon-home"></i> 主页&nbsp;&nbsp;&nbsp;
+</a>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span><b>&nbsp;&nbsp;&nbsp;友情链接管理&nbsp;&nbsp;&nbsp;</b></span>
+</div>
+<h1>友情链接管理</h1>
+{{/block}}
+
+
+{{block name="content"}}
+
+<div class="quick-actions_homepage">
+    <div>
+        <button type="submit" class="label label-success add1" data-toggle="modal" data-target="#exampleModal"
+                style="border: none;">新增
+        </button>
+        <button type="submit" class="label label-warning sort" style="border: none;">排序</button>
+        <button type="submit" class="label label-danger destroy" style="border: none;">删除</button>
+    </div>
+    <div class="alert alert-danger" role="alert" style="width: 385px;margin-left: 350px;display: none;">
+
+    </div>
+
+    <div class="input-group" style="margin-left: 20px;">
+            <span class="input-group-addon"><label class="checkbox-inline">
+                <input type="checkbox" id="box1" style="width: 18px;height:18px;margin-top:-10px;display: block;">
+            </label></span>
+
+        <div class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status"
+             style="background: #EEEEEE;">全选
+        </div>
+    </div>
+    <div class="input-group">
+        <form class="form-horizontal from1"  action="" method="post" name="form1">
+
+            <table class="table table-bordered tab">
+                <thead>
+                <tr>
+                    <th class="th1">#</th>
+                    <th>名称</th>
+                    <th>网址</th>
+                    <th class="th2">排序</th>
+                    <th class="th1">
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {{foreach $links as $link}}
+                <tr>
+                    <th scope="row" class="th1">
+                        <input type="hidden" name="id[]" value="{{$link.id}}">
+                        <input type="checkbox" name="box2[]" class="items" id="inlineCheckbox2" value="{{$link.id}}"
+                               style="width: 18px;height:18px;margin-top:0px;display: block;">
+                    </th>
+                    <td class="web_name">{{$link.web_name}}</td>
+                    <td class="web_id">{{$link.web_id}}</td>
+                    <td class="th2"><input type="text" name="sort[]" class="form-control right" value="{{$link.sort}}"></td>
+                    <td class="th1">
+                        <a href="javascript:void 0;" data-id="{{$link.id}}" class="edit"> <span
+                                class="glyphicon glyphicon-pencil right1" id="edit3" aria-hidden="true" data-toggle="modal"
+                                data-target="#exampleModal"></span></a>
+                        <a href="javascript:void 0;" date-id="{{$link.id}}" class="del"><span
+                                class="glyphicon glyphicon-remove " id="edit5" aria-hidden="true"
+                                data-toggle="modal"
+                                data-target="#gridSystemModal"></span></a>
+                    </td>
+                </tr>
+                {{/foreach}}
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade in" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     style="display:none; padding-right: 17px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title add_name" id="exampleModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="" class="add_edit_form" name="form2">
+                    <input type="hidden" class="hid_id" name="id" value="">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">站点名称:</label>
+                        <input type="text" name="web_name" class="form-control m_web_name" id="recipient-name"
+                               style="width: 560px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">站点地址:</label>
+                        <input type="text" class="form-control m_web_id" name="web_id" id="message-text" value=""
+                               style="width: 560px;">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary sub2" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="gridSystemModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel"
+     style="display:none; padding-right: 17px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="gridModalLabel">删除一个友情链接</h4>
+            </div>
+            <form class="del_link" name="del_link" method="post" action="index.php?control=admin&action=del">
+                <input type="hidden" class="hid2" name="id" value="">
+                <input type="text" name="del_text" class="text_link" value="" style="width: 100%;height: 80px;text-align: center;">
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary sub_del">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+{{/block}}
+{{block name="js"}}
+<script>
+
+    $(function () {
+        $("#box1").click(function () {
+            $(':checkbox').prop("checked", this.checked);
+        })
+        $(".destroy").click(function () {
+            if ($(':checkbox:checked').length == 0) {
+                alert("你还未选中内容！");
+                return false;
+            }
+            $(".from1").attr("action","index.php?control=admin&action=destroy");
+            $(".from1").submit();
+        })
+        $(".sort").click(function(){
+            $(".from1").attr("action","index.php?control=admin&action=sort")
+            $(".from1").submit();
+        })
+        $(".add1").click(function () {
+            $(".m_web_name").val(" ");
+            $(".m_web_id").val(" ");
+            $(".add_name").text("添加友情链接");
+            $(".add_edit_form").attr("action", "index.php?control=admin&action=add");
+
+
+        })
+        $(".sub2").click(function () {
+            $(".add_edit_form").submit();
+        })
+        $(".sub_del").click(function () {
+            $(".del_link").submit();
+        })
+        $(".edit").click(function () {
+            $(".add_edit_form").attr("action", "index.php?control=admin&action=edit");
+            var web_name = $(this).parent().siblings(".web_name").text();
+            $(".m_web_name").val(web_name);
+            var web_id = $(this).parent().siblings(".web_id").text();
+            $(".m_web_id").val(web_id);
+            var id = $(this).attr('data-id');
+            $(".hid_id").val(id);
+            $(".add_name").text("编辑友情链接");
+        })
+        $(".del").click(function () {
+            var web_name = $(this).parent().siblings(".web_name").text();
+            $(".text_link").val(web_name);
+            var id = $(this).attr('date-id');
+            $(".hid2").val(id);
+        })
+    })
+</script>
+{{/block}}

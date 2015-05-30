@@ -1,0 +1,297 @@
+{{extends file = "app/views/layout/layout_admin.html"}}
+{{block name = "css"}}
+<link rel="stylesheet" type="text/css" href="{{$assets}}/select2/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="{{$assets}}/colorpicker/css/colorpicker.css">
+<link rel="stylesheet" type="text/css" href="{{$assets}}/datepicker/datepicker.css">
+
+<style>
+
+    .input-group {
+        width: 98.6%;
+        margin-left: 20px;
+    }
+
+    .td1 {
+        text-align: right;
+        margin-left: -50px;
+        display: block;
+        height: 43px;
+    }
+
+    .hide {
+        display: none;
+
+    }
+
+    .second {
+        display: none;
+    }
+
+    .search {
+        position: relative;
+        z-index: 1;
+    }
+
+    .glyphicon-search {
+        position: absolute;
+        margin-top: 8px;
+        float: right;
+        margin-left: -20px;
+        z-index: 2;
+    }
+
+    .box {
+        border: 1px solid #CDCDCD;
+        background: #EEEEEE;
+    }
+
+    .box1 {
+        float: left;
+        margin-left: 20px;
+        border: 1px solid #CDCDCD;
+    }
+
+    .box2 {
+        float: left;
+    }
+
+    .box2 ul {
+        list-style-type: none;
+        margin-left: -40px;
+    }
+
+    .box2 ul li {
+        float: left;
+        border-right: 1px solid #CDCDCD;
+        border-bottom: 1px solid #CDCDCD;
+        padding: 4px;
+    }
+
+    .box2 ul li a {
+        text-decoration: none;
+    }
+
+    .hover {
+        background: #FFFFFF;
+        border-bottom: none;
+    }
+
+    .tab {
+        margin-top: 2px;
+        float: left;
+        background: #F9F9F9;
+    }
+
+    .form1 {
+        margin-top: 30px;
+        margin-left: 100px;
+    }
+
+    .radio-inline {
+        display: block;
+    }
+
+
+</style>
+{{/block}}
+{{block name = "bread"}}
+
+<div id="breadcrumb"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><a
+        href="/Admin/Index/index" class="tip-bottom" data-original-title="前往主页" style="color: #333333;"><i
+        class="icon-home"></i> 主页&nbsp;&nbsp;&nbsp;
+</a>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span>&nbsp;&nbsp;&nbsp;栏目管理&nbsp;&nbsp;&nbsp;</span>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span><b>&nbsp;&nbsp;&nbsp;新增栏目&nbsp;&nbsp;&nbsp;</b></span>
+</div>
+<h1>新增栏目</h1>
+
+{{/block}}
+{{block name = "content"}}
+<div class="quick-actions_homepage">
+    <div class="box">
+        <div class="box1">
+            <span class="glyphicon glyphicon-align-justify" aria-hidden="true" style="padding: 7px;"></span>
+        </div>
+        <div class="box2">
+            <ul>
+                <li class="hover li1"><a href="#">新增栏目</a></li>
+                <li class="li2"><a href="#">栏目管理</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="input-group tab">
+        <form class="form-horizontal form1" method="post" action="index.php?control=link&action=create">
+            <div class="tabs">
+                <div class="tab1">
+
+                    <div class="form-group">
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label for="inputEmail3" class="col-sm-2 control-label">父栏目：</label>
+
+                            <div class="col-sm-10">
+
+                                <div class="select2">
+                                    <select name="parent" id="select" style="width: 100%;padding: 6px;">
+                                        <option value="0" selected>顶级栏目</option>
+                                        {{foreach $titles as $title}}
+                                        <option value="{{$title.id}}"
+                                                {{if $title.id eq $id}}
+                                                selected
+                                                {{/if}}
+                                                {{if $title.type eq 1}}
+                                                data-type="no_add"
+                                                {{/if}}>
+                                        {{for $i=1;$i<$title.count;$i++}}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {{/for}}
+                                            {{$title.name}} &nbsp;&nbsp;
+                                        {{if $title.type eq 1}}
+                                        [封面]
+                                        {{/if}}
+                                        </option>
+                                        {{/foreach}}
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">名称：</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control title" name="name" id="inputEmail3"
+                                       placeholder="栏目名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">拼音：</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" name="pinyin" class="form-control" id="inputEmail3"
+                                       placeholder="栏目拼音">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">类型：</label>
+
+                            <div class="col-sm-10">
+                                <label class="radio-inline" style="margin-left: 10px;">
+                                    <input type="radio" name="type" class="inlineRadio" value="1" checked> 封面
+                                </label>
+
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" class="inlineRadio" value="2"> 列表
+                                </label>
+
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" class="inlineRadio" value="3">
+                                    URL跳转
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2  control-label">URL跳转</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" name="url" class="form-control url" id="inputEmail3"
+                                       placeholder="如果选择了URL跳转，请填写地址">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="tab2" style="display: none;">
+                    <div class="form-group">
+                        <div class="col-sm-10" style="width: 100%;">
+                        <textarea class="form-control content " name="content" id="inputEmail3" placeholder=""
+                                  style="width: 100%;"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">是否显示：</label>
+
+                <div class="col-sm-10">
+                    <label class="radio-inline" style="margin-left: 10px;">
+                        <input type="radio" name="show" id="inlineRadio1" value="1"checked> 是
+                    </label>
+
+                    <label class="radio-inline">
+                        <input type="radio" name="show" id="inlineRadio2" value="2"> 否
+                    </label>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default submit" data-dismiss="modal"
+                        style="float: left; background: #5BB75B;">添加
+                </button>
+                <button type="button" class="btn btn-primary" style="float: left;margin-left: 30px;">返回</button>
+            </div>
+
+
+        </form>
+    </div>
+
+
+</div>
+
+
+{{/block}}
+
+{{block name = "js"}}
+<script type="text/javascript" src="{{$assets}}/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="{{$assets}}/colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="{{$assets}}/datepicker/bootstrap-datepicker.js"></script>
+<script src="{{$assets}}/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="{{$assets}}/ckfinder/ckfinder.js"></script>
+
+
+<script>
+    $('select').select2();
+    $('.colorpicker').colorpicker();
+    $('.datepicker').datepicker();
+    CKEDITOR.replace('content',
+            {
+                filebrowserBrowseUrl: '/static/ckfinder/ckfinder.html',
+                filebrowserImageBrowseUrl: '/static/ckfinder/ckfinder.html?type=Images',
+                filebrowserFlashBrowseUrl: '/static/ckfinder/ckfinder.html?type=Flash',
+                filebrowserUploadUrl: '/static/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                filebrowserImageUploadUrl: '/static/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                filebrowserFlashUploadUrl: '/static/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+            });
+    $(function () {
+
+        $(".btn2").click(function () {
+            location.href = "index.php?control=link&action=article";
+        })
+        $(".box2 ul li").click(function () {
+            var index = $(this).index() + 1;
+            $(this).addClass("hover").siblings().removeClass("hover");
+            $(".tab" + index).show().siblings().hide();
+        })
+        $(".btn-primary").click(function () {
+            location.href = "index.php?control=link&action=title";
+        });
+        $(".submit").click(function () {
+            if ($("#select").val() == 0 || $(".title").val() == '') {
+                alert("请选择父栏目和填写栏目名称！");
+                return false;
+            }
+            var index = $('input[name="type"]:checked').val();
+            if (index == 3) {
+                if ($(".url").val() == '') {
+                    alert('您已选中跳转，url不能为空！');
+                    return false;
+                }
+            }
+
+        });
+    })
+</script>
+{{/block}}

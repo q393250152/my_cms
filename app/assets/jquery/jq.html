@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+.blue {
+    color:blue;
+}
+.red {
+    color: red;
+}
+    .x{
+        color: chartreuse;
+    }
+</style>
+<body>
+用户名：
+<input type="text" id="username" value="请输入用户名">
+<br>
+<input type="submit" id="sub" value="提交">
+<script type="text/javascript" src="assets/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+      $("#username").focus(function(){
+          if ($("#username").val() =="请输入用户名"){
+              $("#username").val("");
+          }
+      })
+
+
+      $("#username").blur(function(){
+          if ($("#username").val() ==""){
+            $("#username").val("请输入用户名");
+          }
+
+
+      })
+  })
+</script>
+</body>
+</html>

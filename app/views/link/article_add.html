@@ -1,0 +1,285 @@
+{{extends file = "app/views/layout/layout_admin.html"}}
+{{block name = "css"}}
+<link rel="stylesheet" type="text/css" href="{{$assets}}/select2/css/select2.min.css">
+<link rel="stylesheet" type="text/css" href="{{$assets}}/colorpicker/css/colorpicker.css">
+<link rel="stylesheet" type="text/css" href="{{$assets}}/datepicker/datepicker.css">
+
+<style>
+
+    .input-group {
+        width: 98.6%;
+        margin-left: 20px;
+    }
+
+    .form-group .form-control {
+        width: 50%;
+    }
+
+    .btn5 {
+        margin-top: -28px;
+        margin-left: 10px;
+    }
+
+
+</style>
+{{/block}}
+{{block name = "bread"}}
+
+<div id="breadcrumb"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><a
+        href="/Admin/Index/index" class="tip-bottom" data-original-title="前往主页" style="color: #333333;"><i
+        class="icon-home"></i> 主页&nbsp;&nbsp;&nbsp;
+</a>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span>&nbsp;&nbsp;&nbsp;文章列表&nbsp;&nbsp;&nbsp;</span>
+    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span><b>&nbsp;&nbsp;&nbsp;添加文章&nbsp;&nbsp;&nbsp;</b></span>
+</div>
+<h1>添加文章</h1>
+
+{{/block}}
+{{block name = "content"}}
+<div class="quick-actions_homepage">
+    <div class="input-group">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></span>
+
+        <div class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status"
+             style="background: #EEEEEE;">添加文章
+        </div>
+    </div>
+    <div class="input-group">
+        <form class="form-horizontal from1" method="post" action="index.php?control=link&action=article_add">
+            <div class="fist">
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="inputEmail3" class="col-sm-2 control-label">所属栏目：</label>
+
+                    <div class="col-sm-10">
+
+                        <div class="select2">
+                            <select name="cate_id" id="select" style="width: 100%;padding: 6px;">
+                                {{foreach $titles as $title}}
+                                <option value="{{$title.id}}"
+                                        {{if $title.type eq 1}}
+                                        data-type="no_add"
+                                        {{/if}}>
+                                    {{for $i=0;$i<$title.count;$i++}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {{/for}}
+                                    {{$title.name}} &nbsp;&nbsp;
+                                {{if $title.type eq 1}}
+                                [封面]
+                                {{/if}}
+                                </option>
+                                {{/foreach}}
+
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">标题：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control title" name="title" id="inputEmail3" placeholder="文章标题">
+                    </div>
+                </div>
+                <div class="form-group controls">
+                    <label for="inputEmail3" class="col-sm-2 control-label"
+                           style="display: block;float: left;">标题颜色：</label>
+
+                    <div class="col-sm-10 input-append color colorpicker" data-color-format="hex" data-color="#000000"
+                         style="width:350px;margin-left:10px;float: left;">
+                        <input type="text" class="form-control span6" name="color" id="inputEmail3" value="#000000"
+                               style="width: 275px;">
+                        <span class="add-on"
+                              style="display: block; margin-left: 280px;padding: 7px;border: 1px solid #CCCCCC;width: 30px;"><i
+                                style="background-color: rgb(0,0,0);"></i></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">发布日期：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" data-date-format="yyyy-mm-dd" value="{{$time}}" name="time"
+                               class="form-control datepicker span6" id="inputEmail3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Description field:</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="field" class="form-control" id="inputEmail3" placeholder="文章描述">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">摘要：</label>
+
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="paper" id="inputEmail3" placeholder=""></textarea>
+                    </div>
+                </div>
+                <div class="form-group thumb">
+                    <label for="inputEmail3" class="col-sm-2 control-label">缩略图：</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="thumb" name="thumb" placeholder="Email">
+                        <input type="button" value="上 传" onclick="BrowseServer('thumb','img_show')"
+                               class="btn5 btn btn-success">
+                        <input type="button" value="删 除" class="thumb_del btn btn-danger btn5">
+                        <img src="" id="img_show" width="90px" height="90px" class="btn5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">新增附件：</label>
+
+                    <div class="col-sm-10">
+                        <button class="btn btn-primary add_file">增 加</button>
+                    </div>
+                </div>
+                <div class="form-group control-group file">
+                    <label for="inputEmail3" class="col-sm-2 control-label">附件（1）：</label>
+
+                    <div class="col-sm-10 controls">
+                        <input type="text" id="file1" class="form-control" name="file[]">
+                        <input type="button" value="上 传" onclick="BrowseServer('file1')" class="btn btn-success">
+                        <input type="button" value="删 除" class="file_del btn btn-danger">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-10" style="width: 100%;">
+                        <textarea class="form-control content " name="editor1" id="inputEmail3" placeholder=""
+                                  style="width: 100%;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin-left: 0px;">
+                    <button type="submit" class="btn btn-default submit" data-dismiss="modal"
+                            style="background: #F0AD4E;">提交
+                    </button>
+                    <button type="button" class="btn btn-primary btn2">返回</button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+{{/block}}
+
+{{block name = "js"}}
+<script type="text/javascript" src="{{$assets}}/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="{{$assets}}/colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="{{$assets}}/datepicker/bootstrap-datepicker.js"></script>
+<script src="{{$assets}}/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="{{$assets}}/ckfinder/ckfinder.js"></script>
+
+
+<script>
+    $('select').select2();
+    $('.colorpicker').colorpicker();
+    $('.datepicker').datepicker();
+    CKEDITOR.replace('editor1',
+            {
+                filebrowserBrowseUrl: '/static/ckfinder/ckfinder.html',
+                filebrowserImageBrowseUrl: '/static/ckfinder/ckfinder.html?type=Images',
+                filebrowserFlashBrowseUrl: '/static/ckfinder/ckfinder.html?type=Flash',
+                filebrowserUploadUrl: '/static/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                filebrowserImageUploadUrl: '/static/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                filebrowserFlashUploadUrl: '/static/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+            });
+    $(function () {
+//        $(".navbar-nav li").click(function () {
+//            $(this).addClass("active").siblings().removeClass("active");
+//        })
+        $(".btn2").click(function () {
+            location.href = "index.php?control=link&action=article";
+        })
+
+    })
+    //ajaxfileupload
+    function BrowseServer(thumb, img_show) {
+        var finder = new CKFinder();
+        finder.selectActionFunction = function (fileUrl) {
+
+            $("#" + thumb).val(fileUrl);
+            $("#" + img_show).attr("src", "" + fileUrl + "");
+        } //当选中图片时执行的函数
+        finder.popup();//调用窗口
+    }
+
+    $(".thumb_del").click(function () {
+        $("#thumb").val('');
+        $("#img_show").attr("src", '');
+    });
+
+    CKEDITOR.on('instanceReady', function (e) {
+        // alert($("#content").height());
+        $("#content").removeAttr("style");
+        var height = $("#content").height();
+        $(window.parent.document).find("#main").height(height);
+
+    })
+
+    $(".submit").click(function () {
+        var title = $(".title");
+
+        if (title.val() == '') {
+            alert("标题不能为空！");
+            title.focus();
+            return false;
+        }
+//        if(CKEDITOR.instances.editor1.getData() == '') {
+//            alert("内容不能为空！");
+//            content.focus();
+//            return false;
+//        }
+        var type = $("#select").find("option:selected").attr("data-type");
+        console.log(type);
+        if (type == 'no_add') {
+
+            alert("您所选择的栏目是封面栏目，不能添加文章！");
+            return false;
+        }
+    })
+
+    $(".add_file").click(function () {
+        var i = $('.file').size()
+
+        var n = i + 1;
+        var html = '<div class="form-group control-group file">' +
+                '<label for="inputEmail3" class="col-sm-2 control-label">附件(' + n + '):</label>' +
+                '<div class="col-sm-10 controls">' +
+                '<input type="text" id="file' + n + '" class="form-control" name="file[]"/>&nbsp;&nbsp;' +
+                "<input type='button'  value='上 传' onclick=BrowseServer('file" + n + "') class='btn btn-success' />&nbsp;&nbsp;" +
+                "<input type='button'  value='删 除' class='file_del btn btn-danger' />" +
+                '</div>' +
+                '</div>';
+
+        if (n < 6) {
+            $(".file:last").after(html);
+        } else {
+            alert("您最多只能添加5个附件！");
+            return false;
+        }
+        $(this).blur();  //失去焦点
+        return false;   //不跳转
+    });
+    function BrowseServerFile(file) {
+        var finder = new CKFinder();
+        finder.selectActionFunction = function (fileUrl) {
+
+            $("#" + file).val(fileUrl);
+        } //当选中图片时执行的函数
+        finder.popup();//调用窗口
+    }
+    $(document).on("click", ".file_del", function () {
+        $(this).parent().parent().remove();
+    });
+    $(".file_del").click(function () {
+        $("#file1").val('');
+    });
+</script>
+{{/block}}
