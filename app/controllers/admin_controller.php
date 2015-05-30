@@ -78,8 +78,6 @@ class AdminController extends CommonController
             $this->model->sort($_POST);
             $this->jump("index.php?control=admin&action=link");
         }
-
-
     }
 
     function edit()
